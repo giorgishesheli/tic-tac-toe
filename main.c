@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <unistd.h>
@@ -7,7 +6,7 @@
 #include <ncurses.h>
 
 #ifndef BOARD_SIZE
-#define BOARD_SIZE 3
+#define BOARD_SIZE 9
 #endif
 
 #ifdef DEBUG
@@ -17,70 +16,44 @@
 #endif
 
 int cursor_x, cursor_y = 0; // logical cursor location
-int board_x, board_y;  // Board location
+int board_x, board_y;  // Initial board location
 
-int board[BOARD_SIZE][BOARD_SIZE];
+signed int board[2][BOARD_SIZE];
 
 int turn_num = 0; 
 
 
 
 void draw_board(int init_x, int init_y){
-	//top horizontal line
-	mvaddch(init_y + 1, init_x, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 1, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 2, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 3, ACS_PLUS);
-	mvaddch(init_y + 1, init_x + 4, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 5, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 6, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 7, ACS_PLUS);
-	mvaddch(init_y + 1, init_x + 8, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 9, ACS_HLINE);
-	mvaddch(init_y + 1, init_x + 10, ACS_HLINE);
-	//bottom horizontal line
-	mvaddch(init_y + 3, init_x, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 1, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 2, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 3, ACS_PLUS);
-	mvaddch(init_y + 3, init_x + 4, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 5, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 6, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 7, ACS_PLUS);
-	mvaddch(init_y + 3, init_x + 8, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 9, ACS_HLINE);
-	mvaddch(init_y + 3, init_x + 10, ACS_HLINE);
-	//left vertical line
-	mvaddch(init_y, init_x + 3, ACS_VLINE);
-	mvaddch(init_y + 2, init_x + 3, ACS_VLINE);
-	mvaddch(init_y + 4, init_x + 3, ACS_VLINE);
-	//right vertical line
-	mvaddch(init_y, init_x + 7, ACS_VLINE);
-	mvaddch(init_y + 2, init_x + 7, ACS_VLINE);
-	mvaddch(init_y + 4, init_x + 7, ACS_VLINE);
+	int i,j;
+	for(i = 0; i < BOARD_SIZE - 1; i++){
+		for(j = 0; j < BOARD_SIZE * 4 - 1; j++){
+			if((j + 1) % 4 == 0){
+				mvaddch(init_y + 1 + 2 * i , init_x + j, ACS_PLUS);
+			} else {
+				mvaddch(init_y + 1 + 2 * i , init_x + j, ACS_HLINE);
+			}
+		}
+
+		for(j = 0; j < BOARD_SIZE; j++){
+			mvaddch(init_y + 2 * j , init_x + 3 + 4 * i, ACS_VLINE);
+		} 
+			
+	}
 }
 
-int sum(int *array){
-	int i;
-	int result = 0;
-	for(i = 0; i < 3; i++){
-		result += array[i];
-	}
-	return result;
-}
 
 void win_or_draw(){
 
-	int hor_array[] = { board[0][cursor_y], board[1][cursor_y], board[2][cursor_y] };
-	if(sum(board[cursor_x]) == 12 || sum(hor_array) == 12){
+	if(board[0][cursor_x] == BOARD_SIZE * -1 || board[1][cursor_y] == BOARD_SIZE * -1){
 		dbg("O Won\n");
 	}
-	if(sum(board[cursor_x]) == 3 || sum(hor_array) == 3){
-		dbg("X Won \n");
+	if(board[0][cursor_x] == BOARD_SIZE || board[1][cursor_y] == BOARD_SIZE){
+		dbg("X Won\n");
 	}
 
-	if(turn_num == 9){
-		dbg("Draw \n");
+	if(turn_num == BOARD_SIZE * BOARD_SIZE){
+		dbg("DRAW \n");
 	}
 
 }
@@ -104,12 +77,16 @@ void loop(){
 				cursor_x += 1;
 				break;
 			case ' ':
-				if(turn_num % 2 == 0){
-					addch('X');
-					board[cursor_x][cursor_y] = 1;				
-				} else {
-					addch('O');
-					board[cursor_x][cursor_y] = 4;				
+				if(inch() == ' '){ // logic merges with presentiation. not good.
+					if(turn_num % 2 == 0){
+						addch('X');
+						board[0][cursor_x] += 1;				
+						board[1][cursor_y] += 1;
+					} else {
+						addch('O');
+						board[0][cursor_x] -= 1;				
+						board[1][cursor_y] -= 1;
+					}
 				}
 
 				turn_num++;
@@ -132,7 +109,7 @@ void zero_board(){
 	       			       
 
 void start_game(){
-	int x = (COLS / 2) - 8;
+	int x = (COLS / 2) - (BOARD_SIZE * 4) / 2;
 	int y = (int) LINES * 0.2;
 	draw_board(x,y);
 	board_x = x + 1;
