@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include <unistd.h>
@@ -6,7 +7,7 @@
 #include <ncurses.h>
 
 #ifndef BOARD_SIZE
-#define BOARD_SIZE 9
+#define BOARD_SIZE 3
 #endif
 
 #ifdef DEBUG
@@ -15,10 +16,14 @@
 #define dbg(...)
 #endif
 
+#define X_PLAYER 0
+#define Y_PLAYER 1
+
 int cursor_x, cursor_y = 0; // logical cursor location
 int board_x, board_y;  // Initial board location
 
 signed int board[2][BOARD_SIZE];
+signed int diagonal[2] = {0, 0};
 
 int turn_num = 0; 
 
@@ -43,13 +48,23 @@ void draw_board(int init_x, int init_y){
 }
 
 
-void win_or_draw(){
+void win_or_draw(int w_turn){ // w_turn: -1 means Y's turn, 1 means X's turn
+	dbg("diagonal[0] = %d, diagonal[1] = %d\n", diagonal[0], diagonal[1]);
 
-	if(board[0][cursor_x] == BOARD_SIZE * -1 || board[1][cursor_y] == BOARD_SIZE * -1){
-		dbg("O Won\n");
-	}
-	if(board[0][cursor_x] == BOARD_SIZE || board[1][cursor_y] == BOARD_SIZE){
-		dbg("X Won\n");
+	if(w_turn == 1){
+		if(board[0][cursor_x] == BOARD_SIZE || board[1][cursor_y] == BOARD_SIZE || 
+			diagonal[0] == BOARD_SIZE || diagonal[1] == BOARD_SIZE){
+
+				dbg("X Won\n");
+		}
+
+	} else {
+
+		if(board[0][cursor_x] == BOARD_SIZE * -1 || board[1][cursor_y] == BOARD_SIZE * -1 ||
+			diagonal[0] == BOARD_SIZE * -1 || diagonal[1] == BOARD_SIZE * -1){
+
+				dbg("O Won\n");
+		}
 	}
 
 	if(turn_num == BOARD_SIZE * BOARD_SIZE){
@@ -59,8 +74,9 @@ void win_or_draw(){
 }
 
 
-void loop(){
+void main_loop(){
 	char key;
+	signed int l_diag, r_diag, add = 0;
 	for(;;){
 	key = getch();
 		switch(key){
@@ -78,29 +94,43 @@ void loop(){
 				break;
 			case ' ':
 				if(inch() == ' '){ // logic merges with presentiation. not good.
+					if(cursor_x - cursor_y == 0)
+						dbg("l_diag nigga\n");
+
+					if(cursor_x + cursor_y == BOARD_SIZE - 1)
+						r_diag = 1;
+
 					if(turn_num % 2 == 0){
 						addch('X');
-						board[0][cursor_x] += 1;				
-						board[1][cursor_y] += 1;
+						add = 1;
 					} else {
 						addch('O');
-						board[0][cursor_x] -= 1;				
-						board[1][cursor_y] -= 1;
+						add = -1;
 					}
+
+					board[0][cursor_x] += add;				
+					board[1][cursor_y] += add;
+					if(l_diag)
+						diagonal[0] += add;
+					if(r_diag)
+						diagonal[1] += add;
+					turn_num++;
+					win_or_draw(add);
 				}
 
-				turn_num++;
-				win_or_draw();
 		}
 
 		move(board_y + cursor_y * 2, board_x + cursor_x * 4 );
 		refresh();
+		/* reset variables */
+		l_diag = 0;
+		r_diag = 0;
 	}
 }
 
 void zero_board(){
 	int i, j;
-	for(i = 0; i < BOARD_SIZE; i++){
+	for(i = 0; i < 2; i++){
 		for(j = 0; j < BOARD_SIZE; j++){
 			board[i][j] = 0;
 		}
@@ -117,7 +147,7 @@ void start_game(){
 	zero_board(); // Safely zero out board array
 	wmove(stdscr, board_y, board_x);
 	refresh();
-	loop();
+	main_loop();
 }
 
 
