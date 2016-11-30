@@ -1,7 +1,10 @@
-all: main
+all: ttt
 
-main: main.c
-	gcc -std=c11 -Wall -Wpedantic -g main.c -lncurses -o main
+ttt: ttt.o engine.o
+	gcc -std=c11 -Wall -Wpedantic -g ttt.o engine.o -lncurses -o ttt
 
-debug: main.c
-	gcc -std=c11 -Wall -Wpedantic -DDEBUG -g main.c -lncurses -o main
+debug:
+	gcc -std=c11 -Wall -Wpedantic -g -DDEBUG ttt.c engine.c -lncurses -o ttt
+
+clean:
+	rm ttt.o engine.o ttt
