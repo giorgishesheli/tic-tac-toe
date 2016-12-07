@@ -2,10 +2,12 @@
 #include "include/engine.h"
 
 
-static void handle_finish(struct game_state *game, int who){
+static void handle_finish(struct game_state *game, int who)
+{
 	switch(who){
 		case X_WON:
 			dbg("X Won\n");
+			wbkgd(game->win_status, COLOR_PAIR(1));
 			mvwprintw(game->win_status, 0, 0, "X Won\n");
 			break;
 		case O_WON:
@@ -21,10 +23,12 @@ static void handle_finish(struct game_state *game, int who){
 
 	game->status = 0;	
 	wrefresh(game->win_status);
+	wbkgd(game->win_status, COLOR_PAIR(0));
 }
 
 /* w_turn: 1 = X's turn; -1 = Y's turn */
-static void win_or_draw(struct game_state *game, int w_turn){
+static void win_or_draw(struct game_state *game, int w_turn)
+{
 	dbg("x = %d; y = %d; left = %d; right = %d\n----\n",
 			SUM_X, SUM_Y, SUM_LEFT, SUM_RIGHT);
 
@@ -55,7 +59,8 @@ static void win_or_draw(struct game_state *game, int w_turn){
 }
 
 
-void main_loop(struct game_state *game){
+void main_loop(struct game_state *game)
+{
 	char key;
 	signed int l_diag = 0, r_diag = 0, add = 0; 
 	for(;;){
@@ -113,6 +118,7 @@ void main_loop(struct game_state *game){
 			}
 			break;
 		case 'q':
+			wbkgd(game->win_status, COLOR_PAIR(2));
 			mvwprintw(game->win_status, 0, 0, 
 					"Do you really want to quit [Y/N] ?\n");
 			char ch = wgetch(game->win_status);
@@ -124,7 +130,9 @@ void main_loop(struct game_state *game){
 				default:
 					wmove(game->win_status, 0, 0);
 					wclrtoeol(game->win_status);
+					wbkgd(game->win_status, COLOR_PAIR(0));
 					wrefresh(game->win_status);
+					
 			}
 
 
@@ -140,15 +148,9 @@ void main_loop(struct game_state *game){
 	}
 }
 
-void free_game_struct(struct game_state *game){
-	free(game->sum[0]);
-	free(game->sum[1]);
-	free(game->sum[2]);
-	free(game->sum[3]);
-	free(game);
-}
 
-void draw_board(struct game_state *game){
+void draw_board(struct game_state *game)
+{
 	int i,j;
 	for(i = 0; i < game->size - 1; i++){
 		/* draw horizontal lines */

@@ -13,7 +13,6 @@
 #define SUM_RIGHT *game->sum[3]
 
 
-void free_game_struct(struct game_state *game);
 void draw_board(struct game_state *game);
 void main_loop();
 

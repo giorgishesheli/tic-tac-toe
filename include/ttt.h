@@ -27,8 +27,8 @@ extern FILE *dbg_log;
 	game->sum[1] = malloc(a * sizeof(int)); \
 	game->sum[2] = malloc(sizeof(int)); \
 	game->sum[3] = malloc(sizeof(int)); \
-	memset((void *)game->sum[0], 0, a * sizeof(sizeof(int))); \
-	memset((void *)game->sum[1], 0, a * sizeof(sizeof(int))); \
+	memset((void *) game->sum[0], 0, a * sizeof(int)); \
+	memset((void *) game->sum[1], 0, a * sizeof(int)); \
 	*game->sum[2] = 0; \
 	*game->sum[3] = 0; \
 	game->size = a; \
@@ -55,5 +55,6 @@ struct game_state {
 };
 
 void quit(int status);
+void free_game_struct(struct game_state *game);
 
 #endif
