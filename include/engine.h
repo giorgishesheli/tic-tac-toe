@@ -2,18 +2,18 @@
 #define engine_H
 
 
-#define X_WON 0
-#define O_WON 1
-#define DRAW 2
+#define _X_ 0 /* SINGAL X */
+#define _O_ 1 /* SIGNAL O */
+#define _DRAW_ 2 /* SIGNAL DRAW */
+#define _PASS_ 3 /* SIGNAL NOTHING HAPPENED */
 
 
-#define SUM_X game->sum[0][game->x]
-#define SUM_Y game->sum[1][game->y]
-#define SUM_LEFT *game->sum[2]
-#define SUM_RIGHT *game->sum[3]
+#define SUM_X game->logical_board[game->x][game->size]
+#define SUM_Y game->logical_board[game->size][game->y]
+#define SUM_LEFT game->logical_board[game->size + 1][0]
+#define SUM_RIGHT game->logical_board[game->size + 1][1]
 
 
-void draw_board(struct game_state *game);
-void main_loop();
+signed int process_input(struct game_state *game);
 
 #endif

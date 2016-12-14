@@ -1,5 +1,16 @@
 x = 1; y = 1; left = 1; right = 0
 ----
+x = -1; y = 0; left = 1; right = 0
+----
+x = 0; y = 1; left = 2; right = 1
+----
+x = -1; y = -1; left = 2; right = 0
+----
+x = 0; y = 1; left = 3; right = 0
+----
+X Won
+x = 1; y = 1; left = 1; right = 0
+----
 x = 0; y = -1; left = 1; right = 0
 ----
 x = 1; y = 0; left = 2; right = 1
@@ -11,43 +22,7 @@ x = 1; y = 1; left = 3; right = 1
 X Won
 x = 1; y = 1; left = 1; right = 0
 ----
-x = -1; y = 0; left = 1; right = 0
-----
-x = 0; y = 1; left = 2; right = 1
-----
-x = -1; y = 0; left = 2; right = 1
-----
-x = 0; y = 1; left = 3; right = 1
-----
-X Won
 x = 1; y = 1; left = 1; right = 0
-----
-x = 0; y = -1; left = 1; right = 0
-----
-x = 1; y = 0; left = 2; right = 1
-----
-x = 0; y = 0; left = 2; right = 1
-----
-x = 1; y = 1; left = 2; right = 1
-----
-x = 0; y = -1; left = 1; right = 1
-----
-x = 1; y = 1; left = 1; right = 2
-----
-x = -1; y = -2; left = 1; right = 2
-----
-x = 1; y = -1; left = 1; right = 3
-----
-X Won
-x = 1; y = 1; left = 0; right = 0
-----
-x = -1; y = 0; left = -1; right = -1
-----
-x = 0; y = 1; left = -1; right = -1
-----
-x = -1; y = 0; left = -1; right = -2
-----
-x = 0; y = 1; left = -1; right = -2
 ----
 x = 1; y = 1; left = 1; right = 0
 ----
@@ -62,176 +37,31 @@ x = 0; y = 3; left = 0; right = 0
 X Won
 x = 1; y = 1; left = 1; right = 0
 ----
-x = 0; y = -1; left = 1; right = 0
-----
-x = 1; y = 2; left = 1; right = 0
-----
-x = 0; y = -2; left = 0; right = -1
-----
-x = 1; y = 3; left = 0; right = 0
-----
 X Won
 x = 1; y = 1; left = 1; right = 0
 ----
-x = 0; y = -1; left = 1; right = 0
-----
-x = 1; y = 2; left = 1; right = 0
-----
-x = 0; y = -2; left = 0; right = -1
-----
-x = 1; y = 3; left = 0; right = 0
-----
-X Won
 x = 1; y = 1; left = 1; right = 0
 ----
 x = -1; y = -1; left = 0; right = -1
 ----
-x = 2; y = 0; left = 0; right = -1
+x = 0; y = 2; left = 0; right = -1
 ----
-x = -2; y = -1; left = 0; right = -1
+x = -1; y = 1; left = 0; right = -2
 ----
-x = 3; y = 0; left = 0; right = 0
+x = 0; y = 0; left = 0; right = -2
 ----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = -1; left = 0; right = -1
-----
-x = 2; y = 0; left = 0; right = -1
-----
-x = -2; y = 0; left = 0; right = -1
-----
-x = 3; y = 1; left = 0; right = 0
-----
-X Won
-x = 1; y = 1; left = 1; right = 1
-----
-x = 0; y = -1; left = 1; right = 1
-----
-x = 1; y = 0; left = 1; right = 2
-----
-x = 0; y = 0; left = 1; right = 2
-----
-x = 1; y = 1; left = 1; right = 3
-----
-X Won
-x = 1; y = 1; left = 1; right = 1
-----
-x = 0; y = -1; left = 1; right = 1
-----
-x = 1; y = 0; left = 1; right = 2
-----
-x = -1; y = -1; left = 1; right = 1
-----
-x = 2; y = 0; left = 2; right = 1
-----
-x = 1; y = 0; left = 2; right = 1
-----
-x = 0; y = 1; left = 3; right = 1
-----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = 0; left = 1; right = 0
-----
-x = 2; y = 1; left = 1; right = 0
-----
-x = -2; y = 0; left = 0; right = -1
-----
-x = 1; y = 1; left = 0; right = 0
-----
-x = -3; y = -1; left = 0; right = 0
+x = 0; y = -1; left = 0; right = -3
 ----
 O Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = -1; left = 0; right = -1
-----
-x = 2; y = 0; left = 0; right = -1
-----
-x = -2; y = -1; left = 0; right = -1
-----
-x = 3; y = 0; left = 0; right = 0
-----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = -1; left = 0; right = -1
-----
-x = 2; y = 0; left = 0; right = -1
-----
-x = -2; y = -1; left = 0; right = -1
-----
-x = 3; y = 0; left = 0; right = 0
-----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = 0; left = 1; right = 0
-----
-x = 2; y = 1; left = 1; right = 0
-----
-x = -2; y = 0; left = 0; right = -1
-----
-x = 3; y = 1; left = 0; right = 0
-----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = 0; left = 1; right = 0
-----
-x = 0; y = 1; left = 2; right = 1
-----
-x = 0; y = 0; left = 2; right = 1
-----
-x = 1; y = 1; left = 3; right = 1
-----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = -1; left = 0; right = -1
-----
-x = 2; y = 0; left = 0; right = -1
-----
-x = -2; y = 0; left = 0; right = -1
-----
-x = 3; y = 1; left = 0; right = 0
-----
-X Won
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = -1; left = 0; right = -1
-----
-x = 2; y = 0; left = 0; right = -1
-----
-x = -2; y = -1; left = 0; right = -1
-----
-x = 3; y = 0; left = 0; right = 0
-----
-X Won
 x = 1; y = 1; left = 0; right = 0
 ----
-x = 1; y = 1; left = 0; right = 0
+x = -1; y = -1; left = 0; right = 0
 ----
-x = -1; y = 0; left = -1; right = 0
+x = 0; y = 2; left = 1; right = 1
 ----
-x = 0; y = 1; left = -1; right = 0
+x = -1; y = -2; left = 1; right = 0
 ----
-x = -1; y = 0; left = -1; right = 0
-----
-x = 1; y = 1; left = -1; right = 0
-----
-x = -1; y = 0; left = -1; right = 0
-----
-x = 1; y = 1; left = 1; right = 0
-----
-x = -1; y = 0; left = 1; right = 0
-----
-x = 2; y = 1; left = 1; right = 0
-----
-x = -2; y = 0; left = 0; right = -1
-----
-x = 3; y = 1; left = 0; right = 0
+x = 0; y = 3; left = 1; right = 0
 ----
 X Won
 x = 1; y = 1; left = 1; right = 0
@@ -253,21 +83,87 @@ x = 0; y = 1; left = 2; right = 1
 ----
 x = -1; y = 0; left = 2; right = 1
 ----
-x = 0; y = 1; left = 2; right = 2
-----
-x = 0; y = -1; left = 2; right = 2
-----
-x = 1; y = 1; left = 2; right = 3
+x = 0; y = 1; left = 3; right = 1
 ----
 X Won
 x = 1; y = 1; left = 1; right = 0
 ----
-x = -1; y = -1; left = 0; right = -1
+x = 0; y = -1; left = 1; right = 0
 ----
-x = 0; y = 2; left = 0; right = -1
+x = 1; y = 2; left = 1; right = 0
 ----
-x = -1; y = -2; left = 0; right = -1
+x = 0; y = -2; left = 0; right = -1
 ----
-x = 0; y = 3; left = 0; right = 0
+x = 1; y = 3; left = 0; right = 0
 ----
 X Won
+x = 1; y = 1; left = 0; right = 1
+----
+x = -1; y = 0; left = 0; right = 1
+----
+x = 2; y = 1; left = 0; right = 1
+----
+x = -2; y = 0; left = -1; right = 0
+----
+x = 3; y = 1; left = 0; right = 0
+----
+X Won
+x = 1; y = 1; left = 0; right = 1
+----
+x = 0; y = -1; left = 0; right = 1
+----
+x = 1; y = 0; left = 1; right = 2
+----
+x = 0; y = -1; left = 1; right = 2
+----
+x = 1; y = 0; left = 1; right = 3
+----
+X Won
+x = 1; y = 1; left = 0; right = 0
+----
+x = -1; y = 0; left = 0; right = -1
+----
+x = 0; y = 1; left = 0; right = -1
+----
+x = 0; y = 0; left = -1; right = -2
+----
+x = 1; y = 1; left = -1; right = -2
+----
+x = -1; y = 0; left = -1; right = -3
+----
+O Won
+x = 1; y = 1; left = 1; right = 0
+----
+x = -1; y = 0; left = 1; right = 0
+----
+x = 0; y = 1; left = 2; right = 1
+----
+x = -1; y = 0; left = 2; right = 1
+----
+x = 0; y = 1; left = 3; right = 1
+----
+X Won
+x = 1; y = 1; left = 0; right = 0
+----
+x = 0; y = -1; left = 0; right = -1
+----
+x = 1; y = 2; left = 1; right = 0
+----
+x = 0; y = -2; left = 1; right = 0
+----
+x = 1; y = 3; left = 1; right = 0
+----
+X Won
+x = 1; y = 1; left = 0; right = 0
+----
+x = -1; y = 0; left = 0; right = -1
+----
+x = 0; y = 1; left = 0; right = -1
+----
+x = 0; y = 0; left = -1; right = -2
+----
+x = 1; y = 1; left = -1; right = -2
+----
+x = -1; y = 0; left = -1; right = -3
+----
+O Won

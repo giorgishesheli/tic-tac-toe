@@ -9,10 +9,13 @@ FILE *dbg_log;
 
 void free_game_struct(struct game_state *game)
 {
-	free(game->sum[0]);
-	free(game->sum[1]);
-	free(game->sum[2]);
-	free(game->sum[3]);
+	int i;
+	for(i = 0; i <= game->size; i++){
+		free(game->logical_board[i]);
+	}
+	free(game->logical_board[game->size + 1]);
+	free(game->logical_board);
+	free(game->visual);
 	free(game);
 }
 
@@ -25,28 +28,27 @@ void quit(int status)
 struct game_state *init_game()
 {
 	struct game_state *game;
+	int i; /* needed for INIT_GAME_STRUCT macro */
 
 	/* game struct pointer, size of board */
 	INIT_GAME_STRUCT(game, 3);
+	game->turn = 1;
+
+	struct interface *visual = malloc(sizeof(struct interface));
+	visual->win_board = newwin(LINES - 1, COLS, 0, 0); \
+	visual->win_status = newwin(1, COLS + 1, LINES - 1, 0); \
+	visual->board_x = (COLS / 2) - (3 * 4) / 2; \
+	visual->board_y = (int) LINES * 0.2; \
+	game->visual = visual;
+
 
 	draw_board(game); 
-	wmove(game->win_board, game->win_y, ++(game->win_x));
-	wrefresh(game->win_board);
+	wmove(visual->win_board, visual->board_y, ++(visual->board_x));
+	wrefresh(visual->win_board);
 
 	return game;
 }
 
-void init_curses()
-{
-	setlocale(LC_ALL, "");
-	initscr();
-	start_color();
-	use_default_colors();
-	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(2, COLOR_BLACK, COLOR_RED);
-	cbreak();
-	noecho();
-}
 
 int main(int argc, char **argv)
 {
@@ -57,7 +59,7 @@ int main(int argc, char **argv)
 	setbuf(dbg_log, NULL);
 #endif
 
-	init_curses();
+	INIT_INTERFACE();
 	game = init_game();
 	main_loop(game);
 	exit(EXIT_SUCCESS);

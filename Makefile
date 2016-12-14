@@ -1,10 +1,15 @@
+DEBUG = -g -DDEBUG
+	
 all: ttt
 
-ttt: ttt.o engine.o
-	gcc -std=c11 -Wall -Wpedantic -g ttt.o engine.o -lncurses -o ttt
+ttt: ttt.o engine.o curses/curses.o
+	gcc -std=c11 -Wall -Wpedantic $(DEBUG) $^ -lncurses -o $@
 
-debug:
-	gcc -std=c11 -Wall -Wpedantic -g -DDEBUG ttt.c engine.c -lncurses -o ttt
+curses/curses.o: curses/curses.c include/interface/curses.h
+	gcc -std=c11 -Wall -Wpedantic -c $(DEBUG) $< -o $@
+
+%.o: %.c include/%.h
+	gcc -std=c11 -Wall -Wpedantic -c $(DEBUG) $< -o $@
 
 clean:
-	rm ttt.o engine.o ttt
+	rm ttt *.o curses/*.o
