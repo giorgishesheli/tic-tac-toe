@@ -7,6 +7,21 @@
 FILE *dbg_log;
 #endif
 
+void null_game_struct(struct game_state *game){
+	int i;
+	game->turn_num = 0;
+	game->result = 0;
+	game->x = 0;
+	game->y = 0;
+	game->turn = 0;
+
+	for(i = 0; i <= game->size; i++){
+		memset(game->logical_board[i], 0,
+				(game->size + 1) * sizeof(void *));
+	}
+	memset(game->logical_board[game->size + 1], 0, 2 * sizeof(int));
+}
+
 void free_game_struct(struct game_state *game)
 {
 	int i;
@@ -25,42 +40,33 @@ void quit(int status)
 	exit(status);
 }
 
-struct game_state *init_game()
-{
-	struct game_state *game;
-	int i; /* needed for INIT_GAME_STRUCT macro */
-
-	/* game struct pointer, size of board */
-	INIT_GAME_STRUCT(game, 3);
-	game->turn = 1;
-
-	struct interface *visual = malloc(sizeof(struct interface));
-	visual->win_board = newwin(LINES - 1, COLS, 0, 0); \
-	visual->win_status = newwin(1, COLS + 1, LINES - 1, 0); \
-	visual->board_x = (COLS / 2) - (3 * 4) / 2; \
-	visual->board_y = (int) LINES * 0.2; \
-	game->visual = visual;
-
-
-	draw_board(game); 
-	wmove(visual->win_board, visual->board_y, ++(visual->board_x));
-	wrefresh(visual->win_board);
-
-	return game;
-}
 
 
 int main(int argc, char **argv)
 {
 	struct game_state *game;
+	game = malloc(sizeof(struct game_state));
+	memset(game, 0, sizeof(struct game_state));
 
 #ifdef DEBUG
 	dbg_log = fopen("./log", "a");
 	setbuf(dbg_log, NULL);
 #endif
 
-	INIT_INTERFACE();
-	game = init_game();
-	main_loop(game);
+	INIT_INTERFACE(game);
+	while(1){
+		switch(INTERFACE_MENU(game->visual)){
+			case LOCAL_GAME:
+				PLAY_LOCAL(game);
+				break;
+			case INET_PVP:
+				break;
+			case INET_SERV:
+				break;
+			case QUIT_GAME:
+				free(game); // TODO Memory leak
+				quit(EXIT_SUCCESS);
+		}
+	}
 	exit(EXIT_SUCCESS);
 }

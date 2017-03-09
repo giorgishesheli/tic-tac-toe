@@ -2,10 +2,11 @@
 #define engine_H
 
 
-#define _X_ 0 /* SINGAL X */
-#define _O_ 1 /* SIGNAL O */
-#define _DRAW_ 2 /* SIGNAL DRAW */
-#define _PASS_ 3 /* SIGNAL NOTHING HAPPENED */
+#define _X_ 1 /* SINGAL X */
+#define _O_ 2 /* SIGNAL O */
+#define _DRAW_ 3 /* SIGNAL DRAW */
+#define _PASS_ 4 /* SIGNAL THAT NOTHING HAPPENED*/
+#define _END_GAME_ 5 /* SIGNAL TO END GAME */
 
 
 #define SUM_X game->logical_board[game->x][game->size]

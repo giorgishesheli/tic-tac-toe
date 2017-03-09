@@ -20,9 +20,9 @@ extern FILE *dbg_log;
 
 struct game_state {
 	int status; /* 1 = game running, 0 = game over */
-	int turn_num;
 	int size; /* board size */
-	int x, y; /* logical coordiantes */
+	int turn_num;
+	int result;
 	/*
 	   logical board is a two dimensional array with size + 1 columns and
 	   size + 2 rows. from 0 to size it serves as a logical matrix. 
@@ -32,6 +32,7 @@ struct game_state {
 	   there is no
 	*/
 	int **logical_board;
+	int x, y; /* logical coordiantes */
 	struct interface *visual;
 	/* For online pvp */
 	int turn;
@@ -41,15 +42,14 @@ struct game_state {
 
 #ifdef INTERFACE_CURSES
 
-#define INIT_INTERFACE() init_curses()
+#define INIT_INTERFACE(game) curses_init(game)
+#define INTERFACE_MENU(game) curses_menu(game)
+#define PLAY_LOCAL(game) curses_play_local(game)
 #include "interface/curses.h"
 
 #endif
 
-
 #define INIT_GAME_STRUCT(game, a) \
-	game = malloc(sizeof(struct game_state)); \
-	memset(game, 0, sizeof(struct game_state)); \
 	game->status = 1; \
 	game->logical_board = malloc((a + 2) * sizeof(void *)); \
 	for(i = 0; i <= a; i++){ \
@@ -58,11 +58,14 @@ struct game_state {
 	} \
 	game->logical_board[a + 1] = malloc(2 * sizeof(int)); \
 	memset(game->logical_board[a + 1], 0, 2 * sizeof(int)); \
-	game->size = a; \
 
-
+#define LOCAL_GAME 1
+#define INET_PVP 2
+#define INET_SERV 3
+#define QUIT_GAME 4
 
 void quit(int status);
 void free_game_struct(struct game_state *game);
+void null_game_struct(struct game_state *game);
 
 #endif

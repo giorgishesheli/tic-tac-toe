@@ -2,54 +2,34 @@
 #include "include/engine.h"
 
 
-static void handle_finish(struct game_state *game, int who)
-{
-	switch(who){
-		case _X_:
-			dbg("X Won\n");
-			curses_x_won(game);
-			break;
-		case _O_:
-			dbg("O Won\n");
-			curses_o_won(game);
-			break;
-		case _DRAW_:
-			dbg("DRAW \n");
-			curses_draw(game);
-			break;
-		default:
-			dbg("handle_finish() got incorrect parameter\n");
-	}
 
-}
-
-static void win_or_draw(struct game_state *game, signed int player)
+static void win_or_draw(struct game_state *game)
 {
 	dbg("x = %d; y = %d; left = %d; right = %d\n----\n",
 			SUM_X, SUM_Y, SUM_LEFT, SUM_RIGHT);
 
-	if(player == _X_){
-		if(SUM_X == game->size || 
-			SUM_Y == game->size || 
-			SUM_LEFT == game->size || 
-			SUM_RIGHT == game->size){
+	if(SUM_X == game->size || 
+		SUM_Y == game->size || 
+		SUM_LEFT == game->size || 
+		SUM_RIGHT == game->size){
 
-				handle_finish(game, _X_);
-		}
+			game->status = 0;	
+			game->result = _X_;
+	}
 
-	} else {
 
-		if(SUM_X == game->size * -1 ||
-			SUM_Y == game->size * -1 ||
-			SUM_LEFT == game->size * -1 ||
-			SUM_RIGHT == game->size * -1){
+	if(SUM_X == game->size * -1 ||
+		SUM_Y == game->size * -1 ||
+		SUM_LEFT == game->size * -1 ||
+		SUM_RIGHT == game->size * -1){
 
-				handle_finish(game, _O_);
-		}
+			game->result = _O_;
+			game->status = 0;	
 	}
 
 	if(game->turn_num == game->size * game->size && game->status){
-		handle_finish(game, _DRAW_);
+		game->status = 0;	
+		game->result = _DRAW_;
 	}
 }
 
@@ -80,7 +60,7 @@ signed int process_input(struct game_state *game){
 
 		game->logical_board[game->x][game->y] = 1;
 		game->turn_num++;
-		win_or_draw(game, player);
+		win_or_draw(game);
 	}
 
 	return player;
